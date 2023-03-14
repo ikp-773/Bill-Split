@@ -2,7 +2,7 @@ import 'package:bill_split/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../services/firebase/authentication.dart';
+import '../../../services/firebase_auth/authentication.dart';
 
 class AuthController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -19,7 +19,7 @@ class AuthController extends GetxController {
           name: nameController.text,
           email: emailController.text,
           password: passController.text);
-      if (result != 'success') {
+      if (result == 'success') {
         Get.toNamed(Routes.HOME);
       } else {
         GetSnackBar(title: result);

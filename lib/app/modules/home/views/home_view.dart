@@ -20,7 +20,7 @@ class HomeView extends GetView<HomeController> {
       bottomNavigationBar: FluidNavBar(
         icons: [
           FluidNavBarIcon(icon: Icons.home_rounded),
-          // FluidNavBarIcon(icon: Icons.search_rounded),
+          FluidNavBarIcon(icon: Icons.notifications_active_rounded),
           // FluidNavBarIcon(icon: Icons.confirmation_num_outlined),
           FluidNavBarIcon(icon: Icons.person_rounded),
         ],

@@ -23,11 +23,15 @@ class AuthMethods {
         }
 
         UserModel userModel = UserModel(
-            uid: user.user!.uid,
-            email: email,
-            name: name,
-            groups: [],
-            bills: []);
+          uid: user.user!.uid,
+          email: email,
+          name: name,
+          lent: 0.0,
+          owed: 0.0,
+          groups: [],
+          bills: [],
+          friends: [],
+        );
 
         await _firestore.collection('users').doc(user.user!.uid).set(
               userModel.toJson(),
