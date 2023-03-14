@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add_split/bindings/add_split_binding.dart';
+import '../modules/add_split/views/add_split_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/sign_in_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.AUTH,
       page: () => const SignInView(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_SPLIT,
+      page: () => const AddSplitView(),
+      binding: AddSplitBinding(),
     ),
   ];
 }

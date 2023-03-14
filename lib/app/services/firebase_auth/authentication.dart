@@ -1,3 +1,4 @@
+import 'package:bill_split/app/constants/commom.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -21,6 +22,7 @@ class AuthMethods {
         if (kDebugMode) {
           print(user.user!.uid);
         }
+        CommonInstances.storage.write(CommonInstances.uid, user.user!.uid);
 
         UserModel userModel = UserModel(
           uid: user.user!.uid,
@@ -58,6 +60,8 @@ class AuthMethods {
         if (kDebugMode) {
           print(user.user!.uid);
         }
+        CommonInstances.storage.write(CommonInstances.uid, user.user!.uid);
+
         result = 'success';
       }
     } catch (err) {

@@ -2,6 +2,7 @@ import 'package:bill_split/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../services/cloud_firestore/read_user.dart';
 import '../../../services/firebase_auth/authentication.dart';
 
 class AuthController extends GetxController {
@@ -20,7 +21,9 @@ class AuthController extends GetxController {
           email: emailController.text,
           password: passController.text);
       if (result == 'success') {
-        Get.toNamed(Routes.HOME);
+        await UserDetFirebase().getData().then(
+              (value) => Get.toNamed(Routes.HOME, arguments: value),
+            );
       } else {
         GetSnackBar(title: result);
       }
@@ -35,7 +38,9 @@ class AuthController extends GetxController {
         password: passController.text,
       );
       if (result == 'success') {
-        Get.toNamed(Routes.HOME);
+        await UserDetFirebase().getData().then(
+              (value) => Get.toNamed(Routes.HOME, arguments: value),
+            );
       } else {
         GetSnackBar(title: result);
       }

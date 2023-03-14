@@ -1,3 +1,4 @@
+import 'package:bill_split/app/modules/auth/models/user.dart';
 import 'package:bill_split/app/modules/home/views/activity_view.dart';
 import 'package:bill_split/app/modules/home/views/dashboard_view.dart';
 import 'package:bill_split/app/services/cloud_firestore/read_user.dart';
@@ -17,7 +18,6 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    UserDetFirebase().getData();
     super.onInit();
   }
 

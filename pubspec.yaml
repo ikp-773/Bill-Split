@@ -16,6 +16,7 @@ dependencies:
   cloud_firestore: ^4.4.4
   fluid_bottom_nav_bar: ^1.4.0
   get_storage: ^2.1.1
+  flutter_expandable_fab: ^1.7.1
 
 
 dev_dependencies: 

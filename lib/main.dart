@@ -1,3 +1,5 @@
+import 'package:bill_split/app/modules/auth/models/user.dart';
+import 'package:bill_split/app/services/cloud_firestore/read_user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,6 +15,7 @@ import 'firebase_options.dart';
 Future<void> main() async {
   await GetStorage.init();
   var uid = CommonInstances.storage.read(CommonInstances.uid);
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

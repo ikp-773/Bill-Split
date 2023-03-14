@@ -2,72 +2,99 @@
 
 import 'package:bill_split/app/constants/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'dart:math' as math;
 
 import 'package:get/get.dart';
 
-class DashboardView extends GetView {
+import '../controllers/dashboard_controller.dart';
+
+class DashboardView extends GetView<DashboardController> {
   const DashboardView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 55),
-        child: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(
-            Icons.add_card_rounded,
-          ),
+        child: ExpandableFab(
+          distance: 70,
+          collapsedFabSize: ExpandableFabSize.regular,
+          child: Icon(Icons.add_card_rounded),
+          type: ExpandableFabType.up,
+          expandedFabSize: ExpandableFabSize.small,
+          children: [
+            FloatingActionButton(
+              tooltip: 'Split among friends',
+              child: Icon(Icons.person_add_alt_1_rounded),
+              onPressed: () {},
+            ),
+            FloatingActionButton(
+              tooltip: 'Split among group',
+              child: Icon(Icons.group_add_rounded),
+              onPressed: () {},
+            ),
+          ],
         ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: AmountCard(
-                desc: 'Overall',
-                amt: '1000.00',
-                big: true,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: controller.obx(
+          (data) {
+            var userModel = data!;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AmountCard(
-                  desc: 'Overall',
-                  amt: '1000.00',
-                  color: Color.fromARGB(255, 113, 193, 155),
+                Align(
+                  alignment: Alignment.center,
+                  child: AmountCard(
+                    desc: 'Overall',
+                    amt:
+                        'Rs ${(userModel.owed - userModel.lent).toStringAsFixed(2)}',
+                    big: true,
+                  ),
                 ),
-                AmountCard(
-                  desc: 'Overall',
-                  amt: '1000.00',
-                  color: Colors.redAccent,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    AmountCard(
+                      desc: 'Owed',
+                      amt: userModel.owed.toStringAsFixed(2),
+                      color: Color.fromARGB(255, 113, 193, 155),
+                    ),
+                    AmountCard(
+                      desc: 'Lent',
+                      amt: userModel.lent.toStringAsFixed(2),
+                      color: Colors.redAccent,
+                    ),
+                  ],
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
+                  child: Text(
+                    'Friends',
+                    style: CustomFontStyles.subHeader,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                DashboardGrid(
+                  list: userModel.friends,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
+                  child: Text(
+                    'Groups',
+                    style: CustomFontStyles.subHeader,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                DashboardGrid(
+                  list: userModel.groups,
+                ),
+                SizedBox(height: 60)
               ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
-              child: Text(
-                'Friends',
-                style: CustomFontStyles.subHeader,
-                textAlign: TextAlign.left,
-              ),
-            ),
-            DashboardGrid(),
-            Padding(
-              padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
-              child: Text(
-                'Groups',
-                style: CustomFontStyles.subHeader,
-                textAlign: TextAlign.left,
-              ),
-            ),
-            DashboardGrid(),
-            SizedBox(height: 60)
-          ],
+            );
+          },
         ),
       ),
     );
@@ -77,35 +104,42 @@ class DashboardView extends GetView {
 class DashboardGrid extends StatelessWidget {
   const DashboardGrid({
     Key? key,
+    required this.list,
   }) : super(key: key);
+  final List list;
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      physics: NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
-      itemCount: 9,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-      ),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Container(
-              child: Text('A', style: CustomFontStyles.btns),
-              padding: EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                    .withOpacity(.5),
-                shape: BoxShape.circle,
-              ),
+    return list.isEmpty
+        ? Center(
+            child: Text('No data'),
+          )
+        : GridView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            itemCount: list.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
             ),
-            Text('name os')
-          ],
-        );
-      },
-    );
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(.5),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text('A', style: CustomFontStyles.btns),
+                  ),
+                  Text('name os')
+                ],
+              );
+            },
+          );
   }
 }
 
