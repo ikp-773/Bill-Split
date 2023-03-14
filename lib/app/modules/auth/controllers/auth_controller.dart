@@ -1,31 +1,59 @@
+import 'package:bill_split/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../services/firebase/authentication.dart';
+
 class AuthController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  late String email;
-  late String password;
 
-  void submit() {
-    if (!formKey.currentState!.validate()) {
-      return;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+
+  void signUp() async {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+
+      String result = await AuthMethods().signUpUser(
+          name: nameController.text,
+          email: emailController.text,
+          password: passController.text);
+      if (result != 'success') {
+        Get.toNamed(Routes.HOME);
+      } else {
+        GetSnackBar(title: result);
+      }
     }
-    formKey.currentState!.save();
-    // TODO: Implement sign-in logic with _email and _password
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  void signIn() async {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      String result = await AuthMethods().signInUser(
+        email: emailController.text,
+        password: passController.text,
+      );
+      if (result == 'success') {
+        Get.toNamed(Routes.HOME);
+      } else {
+        GetSnackBar(title: result);
+      }
+    }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+    @override
+    void onInit() {
+      super.onInit();
+    }
 
-  @override
-  void onClose() {
-    super.onClose();
+    @override
+    void onReady() {
+      super.onReady();
+    }
+
+    @override
+    void onClose() {
+      super.onClose();
+    }
   }
 }

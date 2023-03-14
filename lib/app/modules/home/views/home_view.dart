@@ -1,3 +1,4 @@
+import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -10,13 +11,29 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
         centerTitle: true,
+        title: const Text(
+          'Bill Split',
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+        ),
       ),
-      body: const Center(
-        child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
+      bottomNavigationBar: FluidNavBar(
+        icons: [
+          FluidNavBarIcon(icon: Icons.home_rounded),
+          // FluidNavBarIcon(icon: Icons.search_rounded),
+          // FluidNavBarIcon(icon: Icons.confirmation_num_outlined),
+          FluidNavBarIcon(icon: Icons.person_rounded),
+        ],
+        animationFactor: .2,
+        onChange: (selectedIndex) {
+          controller.currentIndex.value = selectedIndex;
+        },
+      ),
+      extendBody: true,
+      body: Obx(
+        () => IndexedStack(
+          index: controller.currentIndex.value,
+          children: controller.screens,
         ),
       ),
     );

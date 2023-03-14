@@ -1,9 +1,16 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  RxInt currentIndex = 0.obs;
 
-  final count = 0.obs;
+  final List<Widget> screens = [
+    HomeView(),
+    SearchView(),
+    BookedTicketView(),
+    ProfileView(),
+  ];
+
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +25,4 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

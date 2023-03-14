@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
-import '../modules/auth/views/auth_view.dart';
+import '../modules/auth/views/sign_in_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -20,7 +20,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.AUTH,
-      page: () => const AuthView(),
+      page: () => const SignInView(),
       binding: AuthBinding(),
     ),
   ];
