@@ -24,38 +24,40 @@ class SignUpView extends GetView<AuthController> {
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: controller.formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CTField(
-                  textcontroller: controller.nameController,
-                  hintText: 'Name',
-                  keyboardType: TextInputType.name,
-                ),
-                const SizedBox(height: 16.0),
-                CTField(
-                  textcontroller: controller.emailController,
-                  hintText: 'Email',
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 16.0),
-                CTField(
-                  textcontroller: controller.passController,
-                  hintText: 'Password',
-                  keyboardType: TextInputType.visiblePassword,
-                  password: true,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 25, 40, 30),
-                  child: ElevatedButton(
-                    onPressed: controller.signUp,
-                    style: CustomButtonStyles.elevButtonStyle,
-                    child: const Text(
-                      'Sign Up',
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CTField(
+                    textcontroller: controller.nameController,
+                    hintText: 'Name',
+                    keyboardType: TextInputType.name,
+                  ),
+                  const SizedBox(height: 16.0),
+                  CTField(
+                    textcontroller: controller.emailController,
+                    hintText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(height: 16.0),
+                  CTField(
+                    textcontroller: controller.passController,
+                    hintText: 'Password',
+                    keyboardType: TextInputType.visiblePassword,
+                    password: true,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(40, 25, 40, 30),
+                    child: ElevatedButton(
+                      onPressed: controller.signUp,
+                      style: CustomButtonStyles.elevButtonStyle,
+                      child: const Text(
+                        'Sign Up',
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

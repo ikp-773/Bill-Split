@@ -24,8 +24,8 @@ class UserModel {
   final String uid;
   final String email;
   final String name;
-  final double owed;
-  final double lent;
+  final num owed;
+  final num lent;
   final List<String> groups;
   final List<String> bills;
   final List<String> friends;

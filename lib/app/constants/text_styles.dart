@@ -25,4 +25,9 @@ class CustomFontStyles {
     fontWeight: FontWeight.w700,
     fontSize: 20,
   );
+
+  static TextStyle textField = const TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+  );
 }

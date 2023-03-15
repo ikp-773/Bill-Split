@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bill_split/app/constants/text_styles.dart';
+import 'package:bill_split/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'dart:math' as math;
@@ -27,12 +28,16 @@ class DashboardView extends GetView<DashboardController> {
             FloatingActionButton(
               tooltip: 'Split among friends',
               child: Icon(Icons.person_add_alt_1_rounded),
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.ADD_SPLIT);
+              },
             ),
             FloatingActionButton(
               tooltip: 'Split among group',
               child: Icon(Icons.group_add_rounded),
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.ADD_SPLIT);
+              },
             ),
           ],
         ),
