@@ -83,6 +83,7 @@ class SplitDescView extends GetView<SplitExpenseController> {
                         textAlign: TextAlign.left,
                       ),
                     ),
+                    AdjustSplit(),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(40, 25, 40, 30),
                       child: ElevatedButton(
@@ -99,5 +100,16 @@ class SplitDescView extends GetView<SplitExpenseController> {
             ),
           ),
         ));
+  }
+}
+
+class AdjustSplit extends StatelessWidget {
+  const AdjustSplit({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column();
   }
 }
