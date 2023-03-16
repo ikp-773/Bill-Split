@@ -1,4 +1,4 @@
-import 'package:bill_split/app/modules/auth/models/user.dart';
+import 'package:bill_split/app/models/user.dart';
 import 'package:bill_split/app/services/cloud_firestore/read_user.dart';
 import 'package:get/get.dart';
 

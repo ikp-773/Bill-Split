@@ -9,6 +9,9 @@ class SplitExpenseController extends GetxController {
   final List peopleList = ['You', Get.find<AddSplitController>().selUserName];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  List<TextEditingController>? textControllers = [];
+  List<num> splitAmounts = [];
+  int option = 0;
 
   TextEditingController descController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -17,7 +20,76 @@ class SplitExpenseController extends GetxController {
     dropdownValue.value = value;
   }
 
-  addSplit() {}
+  splitEqually(String amt) {
+    splitAmounts.clear();
+    if (amt.isNotEmpty) {
+      num total = num.parse(amt);
+      num split = (total / textControllers!.length);
+      for (var element in textControllers!) {
+        element.text = split.toStringAsFixed(2);
+        splitAmounts.add(split);
+      }
+    } else {
+      for (var element in textControllers!) {
+        element.text = '0.00';
+      }
+    }
+  }
+
+  splitUnequally(String amt) {
+    splitAmounts.clear();
+    num splitSum = 0;
+    if (amt.isNotEmpty) {
+      for (var element in textControllers!) {
+        if (element.text == '') {
+          element.text = '0';
+        }
+        num split = num.parse(element.text);
+        splitAmounts.add(split);
+        splitSum += split;
+      }
+      if (splitSum == num.parse(amt)) {
+        return true;
+      } else {
+        Get.snackbar("Incomplete Split",
+            "The Splitted amount doesn't match up with actual amount");
+      }
+    }
+    return false;
+  }
+
+  splitPercent(String amt) {
+    splitAmounts.clear();
+    num percentSum = 0;
+    if (amt.isNotEmpty) {
+      for (var element in textControllers!) {
+        if (element.text == '') {
+          element.text = '0';
+        }
+        percentSum += num.parse(element.text);
+      }
+      if (percentSum == 100) {
+        for (var element in textControllers!) {
+          num split = ((num.parse(element.text) / 100) * num.parse(amt));
+          splitAmounts.add(split);
+        }
+      } else {
+        Get.snackbar("Percentaage Doesn't Match",
+            "Make sure the percentage add upto 100%");
+      }
+    }
+  }
+
+  addSplit() {
+    if (option == 0) {
+      splitEqually(amountController.text);
+    } else if (option == 1) {
+      splitUnequally(amountController.text);
+    } else if (option == 2) {
+      splitPercent(amountController.text);
+    }
+    print(splitAmounts);
+  }
 
   @override
   void onInit() {

@@ -18,6 +18,7 @@ dependencies:
   get_storage: ^2.1.1
   flutter_expandable_fab: ^1.7.1
   dropdown_button2: ^2.0.0
+  flutter_expanded_tile: ^0.3.7
 
 
 dev_dependencies: 

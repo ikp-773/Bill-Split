@@ -38,7 +38,7 @@ class SignInView extends GetView<AuthController> {
                     textcontroller: controller.passController,
                     hintText: 'Password',
                     keyboardType: TextInputType.visiblePassword,
-                    password: true,
+                    isPassword: true,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(40, 25, 40, 30),
@@ -80,13 +80,23 @@ class CTField extends StatefulWidget {
     required this.textcontroller,
     required this.hintText,
     required this.keyboardType,
-    this.password = false,
+    this.isPassword = false,
+    this.isMoney = false,
+    this.validator,
+    this.readOnly = false,
+    this.onChanged,
+    this.isPercent = false,
   }) : super(key: key);
 
   final TextEditingController textcontroller;
   final String hintText;
   final TextInputType keyboardType;
-  final bool password;
+  final bool isPassword;
+  final bool isMoney;
+  final validator;
+  final bool readOnly;
+  final bool isPercent;
+  final void Function(String)? onChanged;
 
   @override
   State<CTField> createState() => _CTFieldState();
@@ -99,12 +109,16 @@ class _CTFieldState extends State<CTField> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: TextFormField(
-        obscureText: widget.password ? obscureText : false,
+        onChanged: widget.onChanged,
+        readOnly: widget.readOnly,
+        obscureText: widget.isPassword ? obscureText : false,
         controller: widget.textcontroller,
         keyboardType: widget.keyboardType,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          suffixIcon: widget.password
+          prefixIcon:
+              widget.isMoney ? const Icon(Icons.currency_rupee_rounded) : null,
+          suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(
                     obscureText ? Icons.visibility : Icons.visibility_off,
@@ -116,14 +130,17 @@ class _CTFieldState extends State<CTField> {
                     });
                   },
                 )
-              : null,
+              : widget.isPercent
+                  ? Icon(Icons.percent_rounded)
+                  : null,
         ),
-        validator: (String? value) {
-          if (value!.isEmpty) {
-            return 'Please enter your ${widget.hintText}';
-          }
-          return null;
-        },
+        validator: widget.validator ??
+            (String? value) {
+              if (value!.isEmpty) {
+                return 'Please enter your ${widget.hintText}';
+              }
+              return null;
+            },
       ),
     );
   }

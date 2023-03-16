@@ -44,7 +44,7 @@ class SignUpView extends GetView<AuthController> {
                     textcontroller: controller.passController,
                     hintText: 'Password',
                     keyboardType: TextInputType.visiblePassword,
-                    password: true,
+                    isPassword: true,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(40, 25, 40, 30),

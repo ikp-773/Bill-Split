@@ -28,6 +28,11 @@ class CustomFontStyles {
 
   static TextStyle textField = const TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 16,
+  );
+
+  static TextStyle splitTextHead = const TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 15,
   );
 }

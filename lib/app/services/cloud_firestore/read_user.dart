@@ -1,5 +1,5 @@
 import 'package:bill_split/app/constants/commom.dart';
-import 'package:bill_split/app/modules/auth/models/user.dart';
+import 'package:bill_split/app/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 

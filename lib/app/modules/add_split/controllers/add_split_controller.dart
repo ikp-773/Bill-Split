@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../services/cloud_firestore/read_user.dart';
-import '../../auth/models/user.dart';
+import '../../../models/user.dart';
 
 class AddSplitController extends GetxController {
   List userNameList = Get.find<DashboardController>().usersNameList;
