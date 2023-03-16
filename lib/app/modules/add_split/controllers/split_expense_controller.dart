@@ -1,6 +1,7 @@
 import 'package:bill_split/app/constants/commom.dart';
 import 'package:bill_split/app/models/bills.dart';
 import 'package:bill_split/app/modules/add_split/controllers/add_split_controller.dart';
+import 'package:bill_split/app/modules/add_split/views/split_success_view.dart';
 import 'package:bill_split/app/services/cloud_firestore/add_bills.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -85,22 +86,26 @@ class SplitExpenseController extends GetxController {
 
   addSplit() {
     if (option == 0) {
-      splitEqually(amountController.text);
+      splitEqually(amountController.text).then((res));
     } else if (option == 1) {
       splitUnequally(amountController.text);
     } else if (option == 2) {
       splitPercent(amountController.text);
     }
     print(splitAmounts);
-    FirebaseBills().addBill(BillModel(
-        desc: descController.text,
-        amount: num.parse(amountController.text),
-        createdBy: CommonInstances.storage.read(CommonInstances.uid),
-        paidBy: dropdownValue.value == "You"
-            ? CommonInstances.storage.read(CommonInstances.uid)
-            : Get.find<AddSplitController>().selUserId,
-        createdAt: DateTime.now(),
-        users: [
+  }
+
+  void addBill() {
+    FirebaseBills()
+        .addBill(BillModel(
+            desc: descController.text,
+            amount: num.parse(amountController.text),
+            createdBy: CommonInstances.storage.read(CommonInstances.uid),
+            paidBy: dropdownValue.value == "You"
+                ? CommonInstances.storage.read(CommonInstances.uid)
+                : Get.find<AddSplitController>().selUserId,
+            createdAt: DateTime.now(),
+            users: [
           [
             CommonInstances.storage.read(CommonInstances.uid),
             splitAmounts[0].toStringAsFixed(2)
@@ -109,7 +114,12 @@ class SplitExpenseController extends GetxController {
             Get.find<AddSplitController>().selUserId,
             splitAmounts[1].toStringAsFixed(2)
           ],
-        ]));
+        ]))
+        .then((response) {
+      if (response) {
+        Get.to(() => const SplitSuccessView());
+      }
+    });
   }
 
   @override

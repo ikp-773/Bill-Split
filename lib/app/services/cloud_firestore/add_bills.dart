@@ -12,9 +12,13 @@ class FirebaseBills {
 
   addBill(BillModel bill) async {
     try {
-      var userData = billsCollection.doc("LA").set(bill).onError((e, _) {
+      billsCollection
+          .doc(bill.billId)
+          .set(billModelToJson(bill))
+          .onError((e, _) {
         Get.snackbar("Error Adding Split", "");
       });
+      return true;
     } catch (e) {
       if (kDebugMode) {
         print("Error - $e");
