@@ -11,7 +11,7 @@ String billModelToJson(BillModel data) => json.encode(data.toJson());
 
 class BillModel {
   BillModel({
-    required this.billId,
+    this.billId,
     required this.desc,
     required this.amount,
     required this.createdBy,
@@ -20,9 +20,9 @@ class BillModel {
     required this.users,
   });
 
-  final String billId;
+  final String? billId;
   final String desc;
-  final int amount;
+  final num amount;
   final String createdBy;
   final String paidBy;
   final DateTime createdAt;
