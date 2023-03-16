@@ -12,21 +12,21 @@ String billModelToJson(BillModel data) => json.encode(data.toJson());
 class BillModel {
   BillModel({
     this.billId,
-    required this.desc,
-    required this.amount,
-    required this.createdBy,
-    required this.paidBy,
-    required this.createdAt,
-    required this.users,
+    this.desc,
+    this.amount,
+    this.createdBy,
+    this.paidBy,
+    this.createdAt,
+    this.usersSplit,
   });
 
-  final String? billId;
-  final String desc;
-  final num amount;
-  final String createdBy;
-  final String paidBy;
-  final DateTime createdAt;
-  final List<List<String>> users;
+  String? billId;
+  String? desc;
+  num? amount;
+  String? createdBy;
+  String? paidBy;
+  DateTime? createdAt;
+  List<UsersSplit>? usersSplit;
 
   factory BillModel.fromJson(Map<String, dynamic> json) => BillModel(
         billId: json["billId"],
@@ -35,8 +35,8 @@ class BillModel {
         createdBy: json["created_by"],
         paidBy: json["paid_by"],
         createdAt: DateTime.parse(json["created_at"]),
-        users: List<List<String>>.from(
-            json["users"].map((x) => List<String>.from(x.map((x) => x)))),
+        usersSplit: List<UsersSplit>.from(
+            json["users_split"].map((x) => UsersSplit.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,9 +45,31 @@ class BillModel {
         "amount": amount,
         "created_by": createdBy,
         "paid_by": paidBy,
-        "created_at":
-            "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
-        "users": List<dynamic>.from(
-            users.map((x) => List<dynamic>.from(x.map((x) => x)))),
+        "created_at": createdAt!.toIso8601String(),
+        "users_split": List<dynamic>.from(usersSplit!.map((x) => x.toJson())),
+      };
+}
+
+class UsersSplit {
+  UsersSplit({
+    this.id,
+    this.amt,
+    this.settled,
+  });
+
+  String? id;
+  num? amt;
+  bool? settled;
+
+  factory UsersSplit.fromJson(Map<String, dynamic> json) => UsersSplit(
+        id: json["id"],
+        amt: json["amt"],
+        settled: json["settled"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "amt": amt,
+        "settled": settled,
       };
 }

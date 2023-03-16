@@ -11,8 +11,8 @@ class DashboardController extends GetxController with StateMixin<UserModel> {
       List<UserModel> allUsers = await UserDetFirebase().getAllUsers();
       if (allUsers.isNotEmpty) {
         for (var user in allUsers) {
-          usersNameList.add(user.name);
-          usersIdList.add(user.uid);
+          usersNameList.add(user.name!);
+          usersIdList.add(user.uid!);
         }
       }
       change(value, status: RxStatus.success());

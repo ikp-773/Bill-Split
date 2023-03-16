@@ -8,16 +8,40 @@ import 'package:get/get.dart';
 class FirebaseBills {
   final CollectionReference billsCollection =
       FirebaseFirestore.instance.collection("bills");
+
   final String uid = CommonInstances.storage.read(CommonInstances.uid);
+
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("users");
 
   addBill(BillModel bill) async {
     try {
-      billsCollection
-          .doc(bill.billId)
-          .set(billModelToJson(bill))
-          .onError((e, _) {
+      var billRef = billsCollection.doc();
+      bill.billId = billRef.id;
+      billRef.set(bill.toJson()).onError((e, _) {
         Get.snackbar("Error Adding Split", "");
       });
+      for (var user in bill.usersSplit!) {
+        if (user.id == bill.paidBy) {
+          List frds = [];
+          for (var u in bill.usersSplit!) {
+            if (u.id != uid) {
+              frds.add(u.id);
+            }
+          }
+          await userCollection.doc(user.id).update({
+            "lent": FieldValue.increment(bill.amount! - user.amt!),
+            "friends": FieldValue.arrayUnion(frds),
+            "bills": FieldValue.arrayUnion([bill.billId])
+          });
+        } else {
+          await userCollection.doc(user.id).update({
+            "owed": FieldValue.increment(user.amt!),
+            "friends": FieldValue.arrayUnion([uid]),
+            "bills": FieldValue.arrayUnion([bill.billId])
+          });
+        }
+      }
       return true;
     } catch (e) {
       if (kDebugMode) {

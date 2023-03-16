@@ -55,7 +55,7 @@ class DashboardView extends GetView<DashboardController> {
                   child: AmountCard(
                     desc: 'Overall',
                     amt:
-                        'Rs ${(userModel.owed - userModel.lent).toStringAsFixed(2)}',
+                        'Rs ${(userModel.owed! - userModel.lent!).toStringAsFixed(2)}',
                     big: true,
                   ),
                 ),
@@ -64,12 +64,12 @@ class DashboardView extends GetView<DashboardController> {
                   children: [
                     AmountCard(
                       desc: 'Owed',
-                      amt: userModel.owed.toStringAsFixed(2),
+                      amt: userModel.owed!.toStringAsFixed(2),
                       color: Color.fromARGB(255, 113, 193, 155),
                     ),
                     AmountCard(
                       desc: 'Lent',
-                      amt: userModel.lent.toStringAsFixed(2),
+                      amt: userModel.lent!.toStringAsFixed(2),
                       color: Colors.redAccent,
                     ),
                   ],
@@ -83,7 +83,7 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                 ),
                 DashboardGrid(
-                  list: userModel.friends,
+                  list: userModel.friends!,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
@@ -94,7 +94,7 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                 ),
                 DashboardGrid(
-                  list: userModel.groups,
+                  list: userModel.groups!,
                 ),
                 SizedBox(height: 60)
               ],

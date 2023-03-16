@@ -11,24 +11,24 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   UserModel({
-    required this.uid,
-    required this.email,
-    required this.name,
-    required this.owed,
-    required this.lent,
-    required this.groups,
-    required this.bills,
-    required this.friends,
+    this.uid,
+    this.email,
+    this.name,
+    this.owed,
+    this.lent,
+    this.groups,
+    this.bills,
+    this.friends,
   });
 
-  final String uid;
-  final String email;
-  final String name;
-  final num owed;
-  final num lent;
-  final List<String> groups;
-  final List<String> bills;
-  final List<String> friends;
+  String? email;
+  String? name;
+  num? owed;
+  num? lent;
+  String? uid;
+  List<String>? groups;
+  List<String>? bills;
+  List<String>? friends;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         uid: json["uid"],
@@ -47,8 +47,8 @@ class UserModel {
         "name": name,
         "lent": lent,
         "owed": owed,
-        "groups": List<dynamic>.from(groups.map((x) => x)),
-        "bills": List<dynamic>.from(bills.map((x) => x)),
-        "friends": List<dynamic>.from(friends.map((x) => x)),
+        "groups": List<dynamic>.from(groups!.map((x) => x)),
+        "bills": List<dynamic>.from(bills!.map((x) => x)),
+        "friends": List<dynamic>.from(friends!.map((x) => x)),
       };
 }

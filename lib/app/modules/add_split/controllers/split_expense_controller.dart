@@ -86,38 +86,54 @@ class SplitExpenseController extends GetxController {
 
   addSplit() {
     if (option == 0) {
-      splitEqually(amountController.text).then((res));
+      splitEqually(amountController.text);
     } else if (option == 1) {
       splitUnequally(amountController.text);
     } else if (option == 2) {
       splitPercent(amountController.text);
     }
+
     print(splitAmounts);
+    addBill();
   }
 
   void addBill() {
     FirebaseBills()
-        .addBill(BillModel(
-            desc: descController.text,
-            amount: num.parse(amountController.text),
-            createdBy: CommonInstances.storage.read(CommonInstances.uid),
-            paidBy: dropdownValue.value == "You"
-                ? CommonInstances.storage.read(CommonInstances.uid)
-                : Get.find<AddSplitController>().selUserId,
-            createdAt: DateTime.now(),
-            users: [
-          [
-            CommonInstances.storage.read(CommonInstances.uid),
-            splitAmounts[0].toStringAsFixed(2)
-          ],
-          [
-            Get.find<AddSplitController>().selUserId,
-            splitAmounts[1].toStringAsFixed(2)
-          ],
-        ]))
+        .addBill(
+      BillModel(
+        billId: "",
+        desc: descController.text,
+        amount: num.parse(amountController.text),
+        createdBy: CommonInstances.storage.read(CommonInstances.uid),
+        paidBy: dropdownValue.value == "You"
+            ? CommonInstances.storage.read(CommonInstances.uid)
+            : Get.find<AddSplitController>().selUserId,
+        createdAt: DateTime.now(),
+        usersSplit: [
+          UsersSplit(
+            id: CommonInstances.storage.read(CommonInstances.uid),
+            amt: splitAmounts[0],
+            settled: (dropdownValue.value == "You"
+                    ? CommonInstances.storage.read(CommonInstances.uid)
+                    : Get.find<AddSplitController>().selUserId) ==
+                CommonInstances.storage.read(CommonInstances.uid),
+          ),
+          UsersSplit(
+            id: Get.find<AddSplitController>().selUserId,
+            amt: splitAmounts[1],
+            settled: (dropdownValue.value == "You"
+                    ? CommonInstances.storage.read(CommonInstances.uid)
+                    : Get.find<AddSplitController>().selUserId) ==
+                Get.find<AddSplitController>().selUserId,
+          )
+        ],
+      ),
+    )
         .then((response) {
-      if (response) {
+      if (response.runtimeType == bool && response) {
         Get.to(() => const SplitSuccessView());
+      } else {
+        Get.snackbar(response.toString(), "message");
       }
     });
   }
