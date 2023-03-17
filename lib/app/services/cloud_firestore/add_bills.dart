@@ -19,7 +19,7 @@ class FirebaseBills {
       var billRef = billsCollection.doc();
       bill.billId = billRef.id;
       billRef.set(bill.toJson()).onError((e, _) {
-        Get.snackbar("Error Adding Split", "");
+        Get.snackbar("Error Adding Split", "$e");
       });
       for (var user in bill.usersSplit!) {
         if (user.id == bill.paidBy) {
@@ -48,6 +48,90 @@ class FirebaseBills {
           });
         }
       }
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error - $e");
+      }
+      return e;
+    }
+  }
+
+  getBill(billId) async {
+    try {
+      var billData = await billsCollection.doc(billId).get();
+      BillModel billModel =
+          BillModel.fromJson(billData.data() as Map<String, dynamic>);
+      return billModel;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error - $e");
+      }
+      return e;
+    }
+  }
+
+  removeBill(billId) async {
+    try {
+      BillModel bill = await getBill(billId);
+      for (var u in bill.usersSplit!) {
+        if (u.id == bill.paidBy) {
+          await userCollection.doc(u.id).update({
+            "take": FieldValue.increment(-u.amt!),
+            "bills": FieldValue.arrayRemove([bill.billId])
+          });
+        } else {
+          await userCollection.doc(u.id).update({
+            "give": FieldValue.increment(-u.amt!),
+            "bills": FieldValue.arrayRemove([bill.billId])
+          });
+        }
+      }
+      billsCollection.doc(billId).delete();
+
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error - $e");
+      }
+      return e;
+    }
+  }
+
+  settleBill(billId) async {
+    try {
+      var billData = await billsCollection.doc(billId).get();
+
+      var data = billData.data() as Map<String, dynamic>;
+      BillModel billModel =
+          BillModel.fromJson(billData.data() as Map<String, dynamic>);
+      await billsCollection.doc(billId).update({
+        'users_split': [],
+      });
+      for (var u in billModel.usersSplit!) {
+        await billsCollection.doc(billId).update({
+          'users_split': FieldValue.arrayUnion([
+            {
+              'id': u.id,
+              'amt': u.amt,
+              'settled': true,
+            }
+          ]),
+        });
+      }
+
+      for (var u in billModel.usersSplit!) {
+        if (u.id == billModel.paidBy) {
+          await userCollection.doc(u.id).update({
+            "take": FieldValue.increment(-u.amt!),
+          });
+        } else {
+          await userCollection.doc(u.id).update({
+            "give": FieldValue.increment(-u.amt!),
+          });
+        }
+      }
+
       return true;
     } catch (e) {
       if (kDebugMode) {
