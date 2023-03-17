@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bill_split/app/constants/text_styles.dart';
+import 'package:bill_split/app/models/group.dart';
 import 'package:bill_split/app/models/user.dart';
 import 'package:bill_split/app/routes/app_pages.dart';
 import 'package:bill_split/app/services/cloud_firestore/get_user.dart';
+import 'package:bill_split/app/services/cloud_firestore/groups.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'dart:math' as math;
@@ -104,6 +106,7 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                   DashboardGrid(
                     list: userModel.groups!,
+                    group: true,
                   ),
                   SizedBox(height: 60)
                 ],
@@ -120,8 +123,10 @@ class DashboardGrid extends StatelessWidget {
   const DashboardGrid({
     Key? key,
     required this.list,
+    this.group = false,
   }) : super(key: key);
   final List list;
+  final bool group;
 
   @override
   Widget build(BuildContext context) {
@@ -139,14 +144,16 @@ class DashboardGrid extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               // UserModel u = UserDetFirebase().getUser(list[index]);
-              return HomeListTile(index: index, list: list);
+              return group
+                  ? HomeGroupTile(index: index, list: list)
+                  : HomeFriendsTile(index: index, list: list);
             },
           );
   }
 }
 
-class HomeListTile extends StatefulWidget {
-  const HomeListTile({
+class HomeGroupTile extends StatefulWidget {
+  const HomeGroupTile({
     Key? key,
     required this.index,
     required this.list,
@@ -155,10 +162,79 @@ class HomeListTile extends StatefulWidget {
   final int index;
 
   @override
-  State<HomeListTile> createState() => _HomeListTileState();
+  State<HomeGroupTile> createState() => _HomeGroupTileState();
 }
 
-class _HomeListTileState extends State<HomeListTile> {
+class _HomeGroupTileState extends State<HomeGroupTile> {
+  GroupModel? grp;
+
+  Future<GroupModel?> getData() async {
+    grp = await FirebaseGroups().getGroup(widget.list[widget.index]);
+    return grp;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: getData(),
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                '${snapshot.error} occurred',
+                style: TextStyle(fontSize: 18),
+              ),
+            );
+          } else if (snapshot.hasData) {
+            final Object? g = snapshot.data;
+            GroupModel? G = g as GroupModel?;
+            return InkWell(
+              onTap: () {
+                Get.toNamed(Routes.CHAT, arguments: G);
+              },
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(.5),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(G!.groupName!.substring(0, 1),
+                        style: CustomFontStyles.btns),
+                  ),
+                  Text(G.groupName!),
+                ],
+              ),
+            );
+          }
+        }
+
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
+}
+
+class HomeFriendsTile extends StatefulWidget {
+  const HomeFriendsTile({
+    Key? key,
+    required this.index,
+    required this.list,
+  }) : super(key: key);
+  final List list;
+  final int index;
+
+  @override
+  State<HomeFriendsTile> createState() => _HomeFriendsTileState();
+}
+
+class _HomeFriendsTileState extends State<HomeFriendsTile> {
   UserModel? u;
 
   Future<UserModel?> getData() async {
@@ -183,7 +259,7 @@ class _HomeListTileState extends State<HomeListTile> {
             UserModel? U = u as UserModel?;
             return InkWell(
               onTap: () {
-                Get.toNamed(Routes.CHAT, arguments: U);
+                Get.toNamed(Routes.CHAT_GROUP, arguments: U);
               },
               child: Column(
                 children: [

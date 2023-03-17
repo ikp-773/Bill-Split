@@ -8,6 +8,8 @@ import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/sign_in_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
+import '../modules/chat_group/bindings/chat_group_binding.dart';
+import '../modules/chat_group/views/chat_group_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -43,6 +45,11 @@ class AppPages {
       name: _Paths.ADD_SPLIT_GROUP,
       page: () => const AddSplitGroupView(),
       binding: AddSplitGroupBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT_GROUP,
+      page: () => const ChatGroupView(),
+      binding: ChatGroupBinding(),
     ),
   ];
 }
