@@ -12,7 +12,7 @@ class HomeController extends GetxController {
 
   final List<Widget> screens = [
     const DashboardView(),
-    const ActivityView(),
+    // const ActivityView(),
     const ProfileView(),
   ];
 

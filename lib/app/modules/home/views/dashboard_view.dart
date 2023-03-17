@@ -39,7 +39,7 @@ class DashboardView extends GetView<DashboardController> {
               tooltip: 'Split among group',
               child: Icon(Icons.group_add_rounded),
               onPressed: () {
-                Get.toNamed(Routes.ADD_SPLIT);
+                Get.toNamed(Routes.ADD_SPLIT_GROUP);
               },
             ),
           ],

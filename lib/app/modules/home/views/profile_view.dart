@@ -1,3 +1,5 @@
+import 'package:bill_split/app/constants/text_styles.dart';
+import 'package:bill_split/app/modules/home/controllers/dashboard_controller.dart';
 import 'package:bill_split/app/modules/home/controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -11,35 +13,44 @@ class ProfileView extends GetView<ProfileController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(16, 24, 0, 40),
             child: Text(
               'settings',
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(40, 0, 40, 20),
+            padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
             child: ListTile(
-              title: Text(
+              title: const Text(
                 'profile',
               ),
-              onTap: () {},
-              trailing: Icon(
+              onTap: () {
+                Get.defaultDialog(
+                    titlePadding: const EdgeInsets.all(20),
+                    title: 'Account Details',
+                    middleText: '''
+Name : ${Get.find<DashboardController>().appUser.name!}\n
+Email : ${Get.find<DashboardController>().appUser.email!}
+''',
+                    titleStyle: CustomFontStyles.header);
+              },
+              trailing: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 20,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(40, 0, 40, 20),
+            padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
             child: ListTile(
-              title: Text(
+              title: const Text(
                 'log out',
               ),
               onTap: () {
                 controller.signOut();
               },
-              trailing: Icon(
+              trailing: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 20,
               ),

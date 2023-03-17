@@ -7,6 +7,7 @@ abstract class Routes {
   static const AUTH = _Paths.AUTH;
   static const ADD_SPLIT = _Paths.ADD_SPLIT;
   static const CHAT = _Paths.CHAT;
+  static const ADD_SPLIT_GROUP = _Paths.ADD_SPLIT_GROUP;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const AUTH = '/auth';
   static const ADD_SPLIT = '/add-split';
   static const CHAT = '/chat';
+  static const ADD_SPLIT_GROUP = '/add-split-group';
 }

@@ -1,25 +1,27 @@
-import 'package:bill_split/app/constants/commom.dart';
 import 'package:bill_split/app/models/bills.dart';
-
-import 'package:bill_split/app/services/cloud_firestore/bills.dart';
+import 'package:bill_split/app/models/group.dart';
+import 'package:bill_split/app/services/cloud_firestore/groups.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:h_alert_dialog/h_alert_dialog.dart';
 
-class SplitExpenseController extends GetxController {
+import '../../../constants/commom.dart';
+
+class SplitExpenseGroupController extends GetxController {
   RxString dropdownValue = "You".obs;
 
-  String selUserId = Get.arguments["id"];
-  String selUserName = Get.arguments["name"];
+  List<String> selUserIdList = Get.arguments["id_list"];
+  List selUserNameList = Get.arguments["name_list"];
 
-  List peopleList = [];
+  List peopleList = ["You"];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<TextEditingController>? textControllers = [];
   List<num> splitAmounts = [];
   int option = 0;
 
+  TextEditingController grpNameController = TextEditingController();
   TextEditingController descController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
@@ -97,71 +99,82 @@ class SplitExpenseController extends GetxController {
     }
 
     print(splitAmounts);
-    addBill();
+    addGroupBill();
   }
 
-  void addBill() {
-    FirebaseBills()
-        .addBill(
-      BillModel(
-        billId: "",
-        desc: descController.text,
-        amount: num.parse(amountController.text),
-        createdBy: CommonInstances.storage.read(CommonInstances.uid),
-        paidBy: dropdownValue.value == "You"
+  void addGroupBill() {
+    List<UsersSplit> userSplitList = [];
+    for (var i = 0; i < peopleList.length; i++) {
+      var userSplit = UsersSplit(
+        id: i == 0
             ? CommonInstances.storage.read(CommonInstances.uid)
-            : selUserId,
-        createdAt: DateTime.now(),
-        usersSplit: [
-          UsersSplit(
-            id: CommonInstances.storage.read(CommonInstances.uid),
-            amt: splitAmounts[0],
-            settled: (dropdownValue.value == "You"
-                    ? CommonInstances.storage.read(CommonInstances.uid)
-                    : selUserId) ==
-                CommonInstances.storage.read(CommonInstances.uid),
-          ),
-          UsersSplit(
-            id: selUserId,
-            amt: splitAmounts[1],
-            settled: (dropdownValue.value == "You"
-                    ? CommonInstances.storage.read(CommonInstances.uid)
-                    : selUserId) ==
-                selUserId,
-          )
-        ],
+            : selUserIdList[i - 1],
+        amt: splitAmounts[i],
+        settled: i == peopleList.indexOf(dropdownValue.value) ? true : false,
+      );
+
+      userSplitList.add(userSplit);
+    }
+
+    List<String>? groupMembers = selUserIdList;
+    groupMembers.add(CommonInstances.storage.read(CommonInstances.uid));
+
+    FirebaseGroups()
+        .addGroup(
+      GroupModel(
+        groupId: "",
+        groupName: grpNameController.text,
+        members: groupMembers,
+        bills: [],
       ),
     )
-        .then((response) {
-      if (response.runtimeType == bool && response) {
-        HAlertDialog.showCustomAlertBox(
-          context: Get.context!,
-          timerInSeconds: 3,
-          backgroundColor: Colors.green,
-          title: 'Success',
-          description: 'Split added successfully. Resfresh dashboard.',
-          icon: Icons.done,
-          iconSize: 32,
-          iconColor: Colors.green,
-          titleFontFamily: 'Raleway',
-          titleFontSize: 22,
-          titleFontColor: Colors.white,
-          descriptionFontFamily: 'Raleway',
-          descriptionFontColor: Colors.white70,
-          descriptionFontSize: 18,
-        ).then((value) {
-          Get.back();
-          Get.back();
-        });
-      } else {
-        Get.snackbar(response.toString(), "message");
-      }
+        .then((groupId) {
+      FirebaseGroups()
+          .addGroupBill(
+              BillModel(
+                billId: "",
+                desc: descController.text,
+                amount: num.parse(amountController.text),
+                createdBy: CommonInstances.storage.read(CommonInstances.uid),
+                paidBy: dropdownValue.value == "You"
+                    ? CommonInstances.storage.read(CommonInstances.uid)
+                    : selUserIdList[
+                        peopleList.indexOf(dropdownValue.value) - 1],
+                createdAt: DateTime.now(),
+                usersSplit: userSplitList,
+              ),
+              groupId)
+          .then((response) {
+        if (response.runtimeType == bool && response) {
+          HAlertDialog.showCustomAlertBox(
+            context: Get.context!,
+            timerInSeconds: 3,
+            backgroundColor: Colors.green,
+            title: 'Success',
+            description: 'Group Split added successfully. Resfresh dashboard.',
+            icon: Icons.done,
+            iconSize: 32,
+            iconColor: Colors.green,
+            titleFontFamily: 'Raleway',
+            titleFontSize: 22,
+            titleFontColor: Colors.white,
+            descriptionFontFamily: 'Raleway',
+            descriptionFontColor: Colors.white70,
+            descriptionFontSize: 18,
+          ).then((value) {
+            Get.back();
+            Get.back();
+          });
+        } else {
+          Get.snackbar(response.toString(), "message");
+        }
+      });
     });
   }
 
   @override
   void onInit() {
-    peopleList = ['You', selUserName];
+    peopleList.addAll(selUserNameList);
     if (kDebugMode) {
       print(peopleList);
     }

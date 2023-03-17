@@ -1,10 +1,14 @@
-import 'package:bill_split/app/modules/home/controllers/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AddSplitController extends GetxController {
+import '../../home/controllers/dashboard_controller.dart';
+
+class AddSplitGroupController extends GetxController {
   List userNameList = Get.find<DashboardController>().usersNameList;
   RxList items = [].obs;
+
+  List<String> selUserIdList = [];
+  List selUserNameList = [];
 
   TextEditingController searchController = TextEditingController();
 

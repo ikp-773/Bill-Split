@@ -53,7 +53,7 @@ class ChatView extends GetView<ChatController> {
                       if (bill.paidBy ==
                           Get.find<DashboardController>().appUser.uid) {
                         self = true;
-                        bal = amt - u.amt!;
+                        bal = u.amt!;
                         settled = bill.usersSplit!
                             .every((element) => element.settled == true);
                       } else {

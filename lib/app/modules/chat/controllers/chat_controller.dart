@@ -1,7 +1,7 @@
 import 'package:bill_split/app/models/bills.dart';
 import 'package:bill_split/app/models/user.dart';
 import 'package:bill_split/app/modules/home/controllers/dashboard_controller.dart';
-import 'package:bill_split/app/services/cloud_firestore/add_bills.dart';
+import 'package:bill_split/app/services/cloud_firestore/bills.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
