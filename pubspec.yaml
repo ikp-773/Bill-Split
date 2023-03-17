@@ -19,6 +19,8 @@ dependencies:
   flutter_expandable_fab: ^1.7.1
   dropdown_button2: ^2.0.0
   flutter_expanded_tile: ^0.3.7
+  h_alert_dialog: ^1.1.2
+  flutter_platform_alertbox: ^0.0.4
 
 
 dev_dependencies: 

@@ -23,7 +23,7 @@ class AddSplitView extends GetView<AddSplitController> {
                 height: 46,
                 child: TextFormField(
                   onChanged: (value) {
-                    controller.filterSearchResults(value);
+                    controller.availUserResults(value);
                   },
                   autofocus: false,
                   controller: controller.searchController,

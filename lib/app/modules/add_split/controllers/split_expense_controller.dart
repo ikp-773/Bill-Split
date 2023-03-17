@@ -1,11 +1,12 @@
 import 'package:bill_split/app/constants/commom.dart';
 import 'package:bill_split/app/models/bills.dart';
 import 'package:bill_split/app/modules/add_split/controllers/add_split_controller.dart';
-import 'package:bill_split/app/modules/add_split/views/split_success_view.dart';
+
 import 'package:bill_split/app/services/cloud_firestore/add_bills.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:h_alert_dialog/h_alert_dialog.dart';
 
 class SplitExpenseController extends GetxController {
   RxString dropdownValue = "You".obs;
@@ -131,7 +132,25 @@ class SplitExpenseController extends GetxController {
     )
         .then((response) {
       if (response.runtimeType == bool && response) {
-        Get.to(() => const SplitSuccessView());
+        HAlertDialog.showCustomAlertBox(
+          context: Get.context!,
+          timerInSeconds: 3,
+          backgroundColor: Colors.green,
+          title: 'Success',
+          description: 'Split added done successfully',
+          icon: Icons.done,
+          iconSize: 32,
+          iconColor: Colors.green,
+          titleFontFamily: 'Raleway',
+          titleFontSize: 22,
+          titleFontColor: Colors.white70,
+          descriptionFontFamily: 'Raleway',
+          descriptionFontColor: Colors.white70,
+          descriptionFontSize: 18,
+        ).then((value) {
+          Get.back();
+          Get.back();
+        });
       } else {
         Get.snackbar(response.toString(), "message");
       }

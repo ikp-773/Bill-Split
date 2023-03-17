@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class SplitSuccessView extends GetView {
-  const SplitSuccessView({Key? key}) : super(key: key);
+import '../controllers/chat_controller.dart';
+
+class ChatView extends GetView<ChatController> {
+  const ChatView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SplitSuccessView'),
+        title: Text(controller.friendUser.name!),
         centerTitle: true,
       ),
       body: const Center(
         child: Text(
-          'SplitSuccessView is working',
+          'ChatView is working',
           style: TextStyle(fontSize: 20),
         ),
       ),

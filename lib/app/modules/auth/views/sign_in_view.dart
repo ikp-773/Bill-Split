@@ -61,7 +61,7 @@ class SignInView extends GetView<AuthController> {
         child: Center(
           child: InkWell(
             onTap: () {
-              Get.off(() => const SignUpView(), binding: AuthBinding());
+              Get.offAll(() => const SignUpView(), binding: AuthBinding());
             },
             child: const Text(
               'Sign Up',

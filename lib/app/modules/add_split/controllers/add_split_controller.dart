@@ -13,7 +13,7 @@ class AddSplitController extends GetxController {
 
   TextEditingController searchController = TextEditingController();
 
-  void filterSearchResults(String query) {
+  void availUserResults(String query) {
     RxList dummySearchList = [].obs;
     dummySearchList.addAll(userNameList);
     if (query.isNotEmpty) {

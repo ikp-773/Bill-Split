@@ -22,7 +22,7 @@ class AuthController extends GetxController {
           password: passController.text);
       if (result == 'success') {
         await UserDetFirebase().getSelfUser().then(
-              (value) => Get.toNamed(Routes.HOME, arguments: value),
+              (value) => Get.offAllNamed(Routes.HOME, arguments: value),
             );
       } else {
         GetSnackBar(title: result);
@@ -39,7 +39,7 @@ class AuthController extends GetxController {
       );
       if (result == 'success') {
         await UserDetFirebase().getSelfUser().then(
-              (value) => Get.toNamed(Routes.HOME, arguments: value),
+              (value) => Get.offAllNamed(Routes.HOME, arguments: value),
             );
       } else {
         GetSnackBar(title: result);

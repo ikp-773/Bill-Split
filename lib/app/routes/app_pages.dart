@@ -4,6 +4,8 @@ import '../modules/add_split/bindings/add_split_binding.dart';
 import '../modules/add_split/views/add_split_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/sign_in_view.dart';
+import '../modules/chat/bindings/chat_binding.dart';
+import '../modules/chat/views/chat_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -29,6 +31,11 @@ class AppPages {
       name: _Paths.ADD_SPLIT,
       page: () => const AddSplitView(),
       binding: AddSplitBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT,
+      page: () => const ChatView(),
+      binding: ChatBinding(),
     ),
   ];
 }

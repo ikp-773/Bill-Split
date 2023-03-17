@@ -56,8 +56,7 @@ class DashboardView extends GetView<DashboardController> {
                   alignment: Alignment.center,
                   child: AmountCard(
                     desc: 'Overall',
-                    amt:
-                        'Rs ${(userModel.owed! - userModel.lent!).toStringAsFixed(2)}',
+                    amt: (userModel.owed! - userModel.lent!).toStringAsFixed(2),
                     big: true,
                   ),
                 ),
@@ -173,21 +172,26 @@ class _HomeListTileState extends State<HomeListTile> {
           } else if (snapshot.hasData) {
             final Object? u = snapshot.data;
             UserModel? U = u as UserModel?;
-            return Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    color:
-                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                            .withOpacity(.5),
-                    shape: BoxShape.circle,
+            return InkWell(
+              onTap: () {
+                Get.toNamed(Routes.CHAT, arguments: U);
+              },
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color:
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(.5),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(U!.name!.substring(0, 1),
+                        style: CustomFontStyles.btns),
                   ),
-                  child: Text(U!.name!.substring(0, 1),
-                      style: CustomFontStyles.btns),
-                ),
-                Text(U.name!),
-              ],
+                  Text(U.name!),
+                ],
+              ),
             );
           }
         }
