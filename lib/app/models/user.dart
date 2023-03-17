@@ -14,8 +14,8 @@ class UserModel {
     this.uid,
     this.email,
     this.name,
-    this.owed,
-    this.lent,
+    this.give,
+    this.take,
     this.groups,
     this.bills,
     this.friends,
@@ -23,8 +23,8 @@ class UserModel {
 
   String? email;
   String? name;
-  num? owed;
-  num? lent;
+  num? give;
+  num? take;
   String? uid;
   List<String>? groups;
   List<String>? bills;
@@ -34,8 +34,8 @@ class UserModel {
         uid: json["uid"],
         email: json["email"],
         name: json["name"],
-        lent: json["lent"],
-        owed: json["owed"],
+        take: json["take"],
+        give: json["give"],
         groups: List<String>.from(json["groups"].map((x) => x)),
         bills: List<String>.from(json["bills"].map((x) => x)),
         friends: List<String>.from(json["friends"].map((x) => x)),
@@ -45,8 +45,8 @@ class UserModel {
         "uid": uid,
         "email": email,
         "name": name,
-        "lent": lent,
-        "owed": owed,
+        "take": take,
+        "give": give,
         "groups": List<dynamic>.from(groups!.map((x) => x)),
         "bills": List<dynamic>.from(bills!.map((x) => x)),
         "friends": List<dynamic>.from(friends!.map((x) => x)),

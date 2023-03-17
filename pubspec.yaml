@@ -21,6 +21,7 @@ dependencies:
   flutter_expanded_tile: ^0.3.7
   h_alert_dialog: ^1.1.2
   flutter_platform_alertbox: ^0.0.4
+  pull_to_refresh: ^2.0.0
 
 
 dev_dependencies: 

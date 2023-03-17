@@ -2,14 +2,12 @@ import 'package:bill_split/app/modules/home/controllers/dashboard_controller.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../services/cloud_firestore/read_user.dart';
+import '../../../services/cloud_firestore/get_user.dart';
 import '../../../models/user.dart';
 
 class AddSplitController extends GetxController {
   List userNameList = Get.find<DashboardController>().usersNameList;
   RxList items = [].obs;
-  late String selUserId;
-  late String selUserName;
 
   TextEditingController searchController = TextEditingController();
 

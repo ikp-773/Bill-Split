@@ -1,6 +1,5 @@
 import 'package:bill_split/app/constants/commom.dart';
 import 'package:bill_split/app/models/bills.dart';
-import 'package:bill_split/app/modules/add_split/controllers/add_split_controller.dart';
 
 import 'package:bill_split/app/services/cloud_firestore/add_bills.dart';
 import 'package:flutter/foundation.dart';
@@ -11,7 +10,10 @@ import 'package:h_alert_dialog/h_alert_dialog.dart';
 class SplitExpenseController extends GetxController {
   RxString dropdownValue = "You".obs;
 
-  final List peopleList = ['You', Get.find<AddSplitController>().selUserName];
+  String selUserId = Get.arguments["id"];
+  String selUserName = Get.arguments["name"];
+
+  List peopleList = [];
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<TextEditingController>? textControllers = [];
@@ -108,7 +110,7 @@ class SplitExpenseController extends GetxController {
         createdBy: CommonInstances.storage.read(CommonInstances.uid),
         paidBy: dropdownValue.value == "You"
             ? CommonInstances.storage.read(CommonInstances.uid)
-            : Get.find<AddSplitController>().selUserId,
+            : selUserId,
         createdAt: DateTime.now(),
         usersSplit: [
           UsersSplit(
@@ -116,16 +118,16 @@ class SplitExpenseController extends GetxController {
             amt: splitAmounts[0],
             settled: (dropdownValue.value == "You"
                     ? CommonInstances.storage.read(CommonInstances.uid)
-                    : Get.find<AddSplitController>().selUserId) ==
+                    : selUserId) ==
                 CommonInstances.storage.read(CommonInstances.uid),
           ),
           UsersSplit(
-            id: Get.find<AddSplitController>().selUserId,
+            id: selUserId,
             amt: splitAmounts[1],
             settled: (dropdownValue.value == "You"
                     ? CommonInstances.storage.read(CommonInstances.uid)
-                    : Get.find<AddSplitController>().selUserId) ==
-                Get.find<AddSplitController>().selUserId,
+                    : selUserId) ==
+                selUserId,
           )
         ],
       ),
@@ -137,13 +139,13 @@ class SplitExpenseController extends GetxController {
           timerInSeconds: 3,
           backgroundColor: Colors.green,
           title: 'Success',
-          description: 'Split added done successfully',
+          description: 'Split added successfully. Resfresh dashboard.',
           icon: Icons.done,
           iconSize: 32,
           iconColor: Colors.green,
           titleFontFamily: 'Raleway',
           titleFontSize: 22,
-          titleFontColor: Colors.white70,
+          titleFontColor: Colors.white,
           descriptionFontFamily: 'Raleway',
           descriptionFontColor: Colors.white70,
           descriptionFontSize: 18,
@@ -159,6 +161,7 @@ class SplitExpenseController extends GetxController {
 
   @override
   void onInit() {
+    peopleList = ['You', selUserName];
     if (kDebugMode) {
       print(peopleList);
     }

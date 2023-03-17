@@ -70,14 +70,15 @@ class AddSplitView extends GetView<AddSplitController> {
                             int userNum = Get.find<DashboardController>()
                                 .usersNameList
                                 .indexOf(controller.items[index]);
-                            controller.selUserId =
-                                Get.find<DashboardController>()
-                                    .usersIdList[userNum];
-                            controller.selUserName =
-                                Get.find<DashboardController>()
-                                    .usersNameList[userNum];
+
                             Get.to(() => const SplitDescView(),
-                                binding: AddSplitBinding());
+                                binding: AddSplitBinding(),
+                                arguments: {
+                                  "id": Get.find<DashboardController>()
+                                      .usersIdList[userNum],
+                                  "name": Get.find<DashboardController>()
+                                      .usersNameList[userNum],
+                                });
                           },
                           title: Text(
                             controller.items[index],

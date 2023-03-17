@@ -2,7 +2,7 @@ import 'package:bill_split/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../services/cloud_firestore/read_user.dart';
+import '../../../services/cloud_firestore/get_user.dart';
 import '../../../services/firebase_auth/authentication.dart';
 
 class AuthController extends GetxController {

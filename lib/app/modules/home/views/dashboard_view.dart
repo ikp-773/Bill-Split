@@ -3,12 +3,13 @@
 import 'package:bill_split/app/constants/text_styles.dart';
 import 'package:bill_split/app/models/user.dart';
 import 'package:bill_split/app/routes/app_pages.dart';
-import 'package:bill_split/app/services/cloud_firestore/read_user.dart';
+import 'package:bill_split/app/services/cloud_firestore/get_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'dart:math' as math;
 
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../controllers/dashboard_controller.dart';
 
@@ -44,63 +45,71 @@ class DashboardView extends GetView<DashboardController> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: controller.obx(
-          (data) {
-            var userModel = data!;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: AmountCard(
-                    desc: 'Overall',
-                    amt: (userModel.owed! - userModel.lent!).toStringAsFixed(2),
-                    big: true,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    AmountCard(
-                      desc: 'Owed',
-                      amt: userModel.owed!.toStringAsFixed(2),
-                      color: Color.fromARGB(255, 113, 193, 155),
+      body: SmartRefresher(
+        enablePullDown: true,
+        header: WaterDropHeader(),
+        controller: controller.refreshController,
+        onRefresh: controller.onRefresh,
+        onLoading: controller.onLoading,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: controller.obx(
+            (data) {
+              var userModel = data!;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: AmountCard(
+                      desc: 'Overall',
+                      amt: (userModel.take! - userModel.give!)
+                          .toStringAsFixed(2),
+                      big: true,
                     ),
-                    AmountCard(
-                      desc: 'Lent',
-                      amt: userModel.lent!.toStringAsFixed(2),
-                      color: Colors.redAccent,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      AmountCard(
+                        desc: 'Lent',
+                        amt: userModel.take!.toStringAsFixed(2),
+                        color: Color.fromARGB(255, 113, 193, 155),
+                      ),
+                      AmountCard(
+                        desc: 'Borrowed',
+                        amt: userModel.give!.toStringAsFixed(2),
+                        color: Colors.redAccent,
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
+                    child: Text(
+                      'Friends',
+                      style: CustomFontStyles.subHeader,
+                      textAlign: TextAlign.left,
                     ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
-                  child: Text(
-                    'Friends',
-                    style: CustomFontStyles.subHeader,
-                    textAlign: TextAlign.left,
                   ),
-                ),
-                DashboardGrid(
-                  list: userModel.friends!,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
-                  child: Text(
-                    'Groups',
-                    style: CustomFontStyles.subHeader,
-                    textAlign: TextAlign.left,
+                  DashboardGrid(
+                    list: userModel.friends!,
                   ),
-                ),
-                DashboardGrid(
-                  list: userModel.groups!,
-                ),
-                SizedBox(height: 60)
-              ],
-            );
-          },
+                  Padding(
+                    padding: EdgeInsets.only(top: 10, left: 15, bottom: 20),
+                    child: Text(
+                      'Groups',
+                      style: CustomFontStyles.subHeader,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  DashboardGrid(
+                    list: userModel.groups!,
+                  ),
+                  SizedBox(height: 60)
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
