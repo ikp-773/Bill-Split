@@ -191,7 +191,7 @@ class _HomeGroupTileState extends State<HomeGroupTile> {
             GroupModel? G = g as GroupModel?;
             return InkWell(
               onTap: () {
-                Get.toNamed(Routes.CHAT, arguments: G);
+                Get.toNamed(Routes.CHAT_GROUP, arguments: G);
               },
               child: Column(
                 children: [
