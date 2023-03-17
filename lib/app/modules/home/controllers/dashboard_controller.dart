@@ -7,7 +7,7 @@ class DashboardController extends GetxController with StateMixin<UserModel> {
   List<String> usersIdList = [];
 
   getUserData() async {
-    await UserDetFirebase().getUserModel().then((value) async {
+    await UserDetFirebase().getSelfUser().then((value) async {
       List<UserModel> allUsers = await UserDetFirebase().getAllUsers();
       if (allUsers.isNotEmpty) {
         for (var user in allUsers) {

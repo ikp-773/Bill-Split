@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bill_split/app/constants/text_styles.dart';
+import 'package:bill_split/app/models/user.dart';
 import 'package:bill_split/app/routes/app_pages.dart';
+import 'package:bill_split/app/services/cloud_firestore/read_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'dart:math' as math;
@@ -128,23 +130,74 @@ class DashboardGrid extends StatelessWidget {
             ),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      color:
-                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                              .withOpacity(.5),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text('A', style: CustomFontStyles.btns),
-                  ),
-                  Text('name os')
-                ],
-              );
+              // UserModel u = UserDetFirebase().getUser(list[index]);
+              return HomeListTile(index: index, list: list);
             },
           );
+  }
+}
+
+class HomeListTile extends StatefulWidget {
+  const HomeListTile({
+    Key? key,
+    required this.index,
+    required this.list,
+  }) : super(key: key);
+  final List list;
+  final int index;
+
+  @override
+  State<HomeListTile> createState() => _HomeListTileState();
+}
+
+class _HomeListTileState extends State<HomeListTile> {
+  UserModel? u;
+
+  Future<UserModel?> getData() async {
+    u = await UserDetFirebase().getUser(widget.list[widget.index]);
+    return u;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                '${snapshot.error} occurred',
+                style: TextStyle(fontSize: 18),
+              ),
+            );
+          } else if (snapshot.hasData) {
+            final Object? u = snapshot.data;
+            UserModel? U = u as UserModel?;
+            return Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color:
+                        Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                            .withOpacity(.5),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(U!.name!.substring(0, 1),
+                      style: CustomFontStyles.btns),
+                ),
+                Text(U.name!),
+              ],
+            );
+          }
+        }
+
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+      future: getData(),
+    );
   }
 }
 

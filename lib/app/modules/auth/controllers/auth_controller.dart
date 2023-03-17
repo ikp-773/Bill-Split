@@ -21,7 +21,7 @@ class AuthController extends GetxController {
           email: emailController.text,
           password: passController.text);
       if (result == 'success') {
-        await UserDetFirebase().getUserModel().then(
+        await UserDetFirebase().getSelfUser().then(
               (value) => Get.toNamed(Routes.HOME, arguments: value),
             );
       } else {
@@ -38,7 +38,7 @@ class AuthController extends GetxController {
         password: passController.text,
       );
       if (result == 'success') {
-        await UserDetFirebase().getUserModel().then(
+        await UserDetFirebase().getSelfUser().then(
               (value) => Get.toNamed(Routes.HOME, arguments: value),
             );
       } else {

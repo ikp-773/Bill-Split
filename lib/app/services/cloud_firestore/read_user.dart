@@ -8,7 +8,7 @@ class UserDetFirebase {
       FirebaseFirestore.instance.collection("users");
   final String uid = CommonInstances.storage.read(CommonInstances.uid);
 
-  Future getUserModel() async {
+  Future getSelfUser() async {
     try {
       var userData = await userCollection.doc(uid).get();
       UserModel userModel =
@@ -25,7 +25,7 @@ class UserDetFirebase {
     }
   }
 
-  Future getUser(userId) async {
+  getUser(userId) async {
     try {
       var userData = await userCollection.doc(userId).get();
       UserModel userModel =
