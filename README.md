@@ -4,6 +4,8 @@
 
 The "Bill Split" app is a mobile application developed using Flutter and Firebase. It allows users to manage and split bills among group members. With a clean and intuitive user interface, users can easily sign up and sign in to the app to start managing their expenses.
 
+[![](https://img.shields.io/badge/APK-Bill Split-brightgreen?color=purple&style=for-the-badge)](https://drive.google.com/file/d/1SnOLLshoMSutoIqyF92og3S2h0vRpr6V/view?usp=share_lin)
+
 ## Features
 
 - User Authentication: Users can sign up and sign in to the app using their email and password.
@@ -18,11 +20,9 @@ The "Bill Split" app is developed using the following technologies:
 - Flutter: A mobile app development framework that enables the creation of high-performance, visually attractive apps for both iOS and Android platforms.
 - Firebase: A cloud-based platform that provides various backend services, such as authentication, database, storage, and hosting, which are used to power the app.
 
-
 ## Pending Task
 
 * Debt simplification view couldn't be completed.
-
 
 ## Libraries used
 
@@ -37,7 +37,6 @@ The "Bill Split" app is developed using the following technologies:
 * h_alert_dialog : 1.1.2
 * pull_to_refresh:^2.0.0
 
-
 ## How to configure
 
 Make sure flutter is set up. If not set it using [Flutter Environment Setup](https://flutter.dev/docs/get-started/install).
@@ -50,8 +49,8 @@ To get started with the "Bill Split" app, follow these steps:
    $ git clone https://github.com/ikp-773/My-Doc.git
    $ cd My-Doc/
    ```
-3. Configure Firebase services for the app, authentication and add `google-services.json`  inside `android/app/` .
-4. Run the flutter app using
+2. Configure Firebase services for the app, authentication and add `google-services.json`  inside `android/app/` .
+3. Run the flutter app using
 
    ```bash
    $flutter pub get
