@@ -12,15 +12,12 @@ dependencies:
     sdk: flutter
   firebase_core: ^2.7.1
   firebase_auth: ^4.2.10
-  firebase_analytics: ^10.1.5
   cloud_firestore: ^4.4.4
   fluid_bottom_nav_bar: ^1.4.0
   get_storage: ^2.1.1
   flutter_expandable_fab: ^1.7.1
   dropdown_button2: ^2.0.0
-  flutter_expanded_tile: ^0.3.7
   h_alert_dialog: ^1.1.2
-  flutter_platform_alertbox: ^0.0.4
   pull_to_refresh: ^2.0.0
 
 

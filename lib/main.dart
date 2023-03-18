@@ -1,5 +1,3 @@
-import 'package:bill_split/app/models/user.dart';
-import 'package:bill_split/app/services/cloud_firestore/get_user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,7 +7,7 @@ import 'app/constants/commom.dart';
 import 'app/routes/app_pages.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -31,10 +29,6 @@ class MyApp extends StatelessWidget {
     this.uid,
   }) : super(key: key);
   final String? uid;
-
-  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
