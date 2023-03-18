@@ -259,7 +259,7 @@ class _HomeFriendsTileState extends State<HomeFriendsTile> {
             UserModel? U = u as UserModel?;
             return InkWell(
               onTap: () {
-                Get.toNamed(Routes.CHAT_GROUP, arguments: U);
+                Get.toNamed(Routes.CHAT, arguments: U);
               },
               child: Column(
                 children: [

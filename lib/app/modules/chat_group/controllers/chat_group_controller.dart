@@ -43,6 +43,7 @@ class ChatGroupController extends GetxController
   }
 
   summarizeGroup() async {
+    summaryList.clear();
     for (var user in group.members!) {
       if (user != CommonInstances.storage.read(CommonInstances.uid)) {
         num total = 0;
@@ -54,6 +55,9 @@ class ChatGroupController extends GetxController
             for (var u in billModel.usersSplit!) {
               if (!u.settled! && u.id == user) {
                 total += u.amt!;
+              }
+              if (billModel.paidBy == user && u.id == user && !u.settled!) {
+                total = total - (billModel.amount! - u.amt!);
               }
             }
           }

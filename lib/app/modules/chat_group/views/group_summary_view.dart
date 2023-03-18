@@ -29,14 +29,20 @@ class GroupSummaryView extends GetView<ChatGroupController> {
                   style: CustomFontStyles.btns,
                 ),
                 Text(
-                  'Rs ${controller.summaryList[index].amount.toStringAsFixed(2)}',
+                  'Rs ${controller.summaryList[index].amount.abs().toStringAsFixed(2)}',
                   style: CustomFontStyles.btns,
                 ),
               ],
             ),
-            subtitle: Text(
-              'Owes You',
-            ),
+            subtitle: controller.summaryList[index].amount.isNegative
+                ? const Text(
+                    'You Owe',
+                    style: TextStyle(color: Colors.red),
+                  )
+                : const Text(
+                    'Owes You',
+                    style: TextStyle(color: Colors.green),
+                  ),
           );
         },
       ),
