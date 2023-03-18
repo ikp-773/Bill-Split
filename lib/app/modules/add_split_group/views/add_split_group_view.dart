@@ -83,6 +83,8 @@ class AddSplitGroupView extends GetView<AddSplitGroupController> {
             Get.to(() => const SplitDescGroupView(),
                 binding: AddSplitGroupBinding(),
                 arguments: {
+                  "group_id": "",
+                  "group_name": "",
                   "id_list": controller.selUserIdList,
                   "name_list": controller.selUserNameList,
                 });

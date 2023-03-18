@@ -1,5 +1,5 @@
-import 'package:bill_split/app/models/bills.dart';
-import 'package:bill_split/app/models/group.dart';
+import 'package:bill_split/app/models/bills_model.dart';
+import 'package:bill_split/app/models/group_model.dart';
 import 'package:bill_split/app/services/cloud_firestore/groups.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,8 @@ class SplitExpenseGroupController extends GetxController {
 
   List<String> selUserIdList = Get.arguments["id_list"];
   List selUserNameList = Get.arguments["name_list"];
+
+  bool newGroup = Get.arguments["group_id"] == "";
 
   List peopleList = ["You"];
 
@@ -119,16 +121,60 @@ class SplitExpenseGroupController extends GetxController {
     List<String>? groupMembers = selUserIdList;
     groupMembers.add(CommonInstances.storage.read(CommonInstances.uid));
 
-    FirebaseGroups()
-        .addGroup(
-      GroupModel(
-        groupId: "",
-        groupName: grpNameController.text,
-        members: groupMembers,
-        bills: [],
-      ),
-    )
-        .then((groupId) {
+    if (newGroup) {
+      FirebaseGroups()
+          .addGroup(
+        GroupModel(
+          groupId: "",
+          groupName: grpNameController.text,
+          members: groupMembers,
+          bills: [],
+        ),
+      )
+          .then((groupId) {
+        FirebaseGroups()
+            .addGroupBill(
+                BillModel(
+                  billId: "",
+                  desc: descController.text,
+                  amount: num.parse(amountController.text),
+                  createdBy: CommonInstances.storage.read(CommonInstances.uid),
+                  paidBy: dropdownValue.value == "You"
+                      ? CommonInstances.storage.read(CommonInstances.uid)
+                      : selUserIdList[
+                          peopleList.indexOf(dropdownValue.value) - 1],
+                  createdAt: DateTime.now(),
+                  usersSplit: userSplitList,
+                ),
+                groupId)
+            .then((response) {
+          if (response.runtimeType == bool && response) {
+            HAlertDialog.showCustomAlertBox(
+              context: Get.context!,
+              timerInSeconds: 3,
+              backgroundColor: Colors.green,
+              title: 'Success',
+              description:
+                  'Group Split added successfully. Resfresh dashboard.',
+              icon: Icons.done,
+              iconSize: 32,
+              iconColor: Colors.green,
+              titleFontFamily: 'Raleway',
+              titleFontSize: 22,
+              titleFontColor: Colors.white,
+              descriptionFontFamily: 'Raleway',
+              descriptionFontColor: Colors.white70,
+              descriptionFontSize: 18,
+            ).then((value) {
+              Get.back();
+              Get.back();
+            });
+          } else {
+            Get.snackbar(response.toString(), "message");
+          }
+        });
+      });
+    } else {
       FirebaseGroups()
           .addGroupBill(
               BillModel(
@@ -143,7 +189,7 @@ class SplitExpenseGroupController extends GetxController {
                 createdAt: DateTime.now(),
                 usersSplit: userSplitList,
               ),
-              groupId)
+              Get.arguments["group_id"])
           .then((response) {
         if (response.runtimeType == bool && response) {
           HAlertDialog.showCustomAlertBox(
@@ -169,11 +215,14 @@ class SplitExpenseGroupController extends GetxController {
           Get.snackbar(response.toString(), "message");
         }
       });
-    });
+    }
   }
 
   @override
   void onInit() {
+    if (!newGroup) {
+      grpNameController.text = Get.arguments["group_name"];
+    }
     peopleList.addAll(selUserNameList);
     if (kDebugMode) {
       print(peopleList);

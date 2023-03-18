@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:bill_split/app/constants/text_styles.dart';
-import 'package:bill_split/app/models/group.dart';
+import 'package:bill_split/app/models/group_model.dart';
 import 'package:bill_split/app/models/user.dart';
 import 'package:bill_split/app/routes/app_pages.dart';
 import 'package:bill_split/app/services/cloud_firestore/get_user.dart';

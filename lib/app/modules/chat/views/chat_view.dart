@@ -1,4 +1,4 @@
-import 'package:bill_split/app/models/bills.dart';
+import 'package:bill_split/app/models/bills_model.dart';
 import 'package:bill_split/app/modules/add_split/controllers/add_split_controller.dart';
 import 'package:bill_split/app/modules/add_split/controllers/split_expense_controller.dart';
 import 'package:bill_split/app/modules/add_split/views/split_desc_view.dart';

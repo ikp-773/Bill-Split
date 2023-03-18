@@ -30,6 +30,7 @@ class SplitDescGroupView extends GetView<SplitExpenseGroupController> {
                     height: 50,
                   ),
                   CTField(
+                    readOnly: !controller.newGroup,
                     textcontroller: controller.grpNameController,
                     hintText: 'Group Name',
                     keyboardType: TextInputType.name,

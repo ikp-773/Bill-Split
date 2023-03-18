@@ -1,5 +1,5 @@
 import 'package:bill_split/app/constants/commom.dart';
-import 'package:bill_split/app/models/bills.dart';
+import 'package:bill_split/app/models/bills_model.dart';
 
 import 'package:bill_split/app/services/cloud_firestore/bills.dart';
 import 'package:flutter/foundation.dart';
