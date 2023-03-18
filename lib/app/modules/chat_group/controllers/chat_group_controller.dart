@@ -1,13 +1,16 @@
 import 'package:bill_split/app/constants/commom.dart';
 import 'package:bill_split/app/models/group_model.dart';
+import 'package:bill_split/app/models/group_summary_model.dart';
 import 'package:bill_split/app/services/cloud_firestore/get_user.dart';
 import 'package:bill_split/app/services/cloud_firestore/groups.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:h_alert_dialog/h_alert_dialog.dart';
 
-import '../../../models/bills_model.dart';
+import '../../../models/bill_model.dart';
 
+import '../../../models/user.dart';
 import '../../../services/cloud_firestore/bills.dart';
 
 class ChatGroupController extends GetxController
@@ -15,6 +18,8 @@ class ChatGroupController extends GetxController
   GroupModel group = Get.arguments;
 
   List<BillModel> groupBills = [];
+
+  List<GroupSummaryModel> summaryList = [];
 
   List groupMemberList = [];
   List<String> groupMembersIdList = [];
@@ -33,8 +38,32 @@ class ChatGroupController extends GetxController
         });
       }
     }
-
+    await summarizeGroup();
     change(groupBills, status: RxStatus.success());
+  }
+
+  summarizeGroup() async {
+    for (var user in group.members!) {
+      if (user != CommonInstances.storage.read(CommonInstances.uid)) {
+        num total = 0;
+        UserModel? userModel = await UserDetFirebase().getUser(user);
+
+        for (var element in userModel!.bills!) {
+          if (group.bills!.contains(element)) {
+            BillModel billModel = await FirebaseBills().getBill(element);
+            for (var u in billModel.usersSplit!) {
+              if (!u.settled! && u.id == user) {
+                total += u.amt!;
+              }
+            }
+          }
+        }
+        summaryList.add(GroupSummaryModel(
+          name: userModel.name!,
+          amount: total,
+        ));
+      }
+    }
   }
 
   settleGroupBalance(billId) {

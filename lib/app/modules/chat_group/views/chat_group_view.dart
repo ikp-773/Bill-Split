@@ -1,8 +1,10 @@
+import 'package:bill_split/app/modules/chat_group/bindings/chat_group_binding.dart';
+import 'package:bill_split/app/modules/chat_group/views/group_summary_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../models/bills_model.dart';
+import '../../../models/bill_model.dart';
 import '../../add_split_group/bindings/add_split_group_binding.dart';
 import '../../add_split_group/views/split_desc_group_view.dart';
 
@@ -19,8 +21,10 @@ class ChatGroupView extends GetView<ChatGroupController> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
-            tooltip: "summarize Expenses",
+            onPressed: () {
+              Get.to(const GroupSummaryView(), binding: ChatGroupBinding());
+            },
+            tooltip: "Summarize Expenses",
             icon: const Icon(Icons.summarize_rounded),
           ),
           const SizedBox(width: 30),

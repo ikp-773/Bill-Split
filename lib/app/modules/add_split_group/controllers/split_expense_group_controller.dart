@@ -1,4 +1,4 @@
-import 'package:bill_split/app/models/bills_model.dart';
+import 'package:bill_split/app/models/bill_model.dart';
 import 'package:bill_split/app/models/group_model.dart';
 import 'package:bill_split/app/services/cloud_firestore/groups.dart';
 import 'package:flutter/foundation.dart';

@@ -1,4 +1,4 @@
-import 'package:bill_split/app/models/bills_model.dart';
+import 'package:bill_split/app/models/bill_model.dart';
 import 'package:bill_split/app/models/user.dart';
 import 'package:bill_split/app/modules/home/controllers/dashboard_controller.dart';
 import 'package:bill_split/app/services/cloud_firestore/bills.dart';
