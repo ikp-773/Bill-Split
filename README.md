@@ -4,7 +4,7 @@
 
 The "Bill Split" app is a mobile application developed using Flutter and Firebase. It allows users to manage and split bills among group members. With a clean and intuitive user interface, users can easily sign up and sign in to the app to start managing their expenses.
 
-[![Apk](https://img.shields.io/badge/APK-Bill%20Split-brightgreen?color=purple&style=for-the-badge)]([https://drive.google.com/file/d/1SnOLLshoMSutoIqyF92og3S2h0vRpr6V/view?usp=share_lin](https://drive.google.com/file/d/1SnOLLshoMSutoIqyF92og3S2h0vRpr6V/view?usp=sharing))
+[![Apk](https://img.shields.io/badge/APK-Bill%20Split-brightgreen?color=purple&style=for-the-badge)](https://drive.google.com/file/d/1SnOLLshoMSutoIqyF92og3S2h0vRpr6V/view?usp=share_lin](https://drive.google.com/file/d/1SnOLLshoMSutoIqyF92og3S2h0vRpr6V/view?usp=sharing))
 
 [![Video Demo](https://img.shields.io/badge/Video-Demo-yellowgreen?style=for-the-badge)](https://drive.google.com/file/d/1ffdj7Quu0keJsmwd6HAjQ4B5imae0Caa/view?usp=share_link)
 
