@@ -58,3 +58,16 @@ To get started with the "Bill Split" app, follow these steps:
    $flutter pub get
    $flutter run
    ```
+
+
+## Screen Shots
+
+![1679210464868](image/README/1679210464868.png)
+
+![1679210507635](image/README/1679210507635.png)
+
+![1679210517211](image/README/1679210517211.png)
+
+![1679210525024](image/README/1679210525024.png)
+
+![1679210531550](image/README/1679210531550.png)
