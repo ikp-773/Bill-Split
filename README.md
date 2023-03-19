@@ -62,12 +62,10 @@ To get started with the "Bill Split" app, follow these steps:
 
 ## Screen Shots
 
-![1679210464868](image/README/1679210464868.png)
+<img src="image/README/1679210464868.png" alt= “1679210464868” width="30%" height="30%">   <img src="image/README/1679210507635.png" alt= “1679210507635” width="30%" height="30%">
 
-![1679210507635](image/README/1679210507635.png)
+<img src="image/README/1679210517211.png" alt= “1679210517211” width="30%" height="30%">   <img src="image/README/1679210525024.png" alt= “1679210525024” width="30%" height="30%">
 
-![1679210517211](image/README/1679210517211.png)
+<img src="image/README/1679210531550.png" alt= “1679210531550” width="30%" height="30%"> 
 
-![1679210525024](image/README/1679210525024.png)
 
-![1679210531550](image/README/1679210531550.png)
