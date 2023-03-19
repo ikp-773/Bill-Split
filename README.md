@@ -1,6 +1,6 @@
 # Bill Split App
 
-[![wakatime](https://wakatime.com/badge/user/fac0edb0-504c-4b92-b3c9-891f4dc941d5/project/5cf27c96-63e1-43e1-9f0a-56f11b0d3b84.svg)](https://wakatime.com/badge/user/fac0edb0-504c-4b92-b3c9-891f4dc941d5/project/5cf27c96-63e1-43e1-9f0a-56f11b0d3b84) ![GitHub top language](https://img.shields.io/github/languages/top/ikp-773/Bill-Split?color=b) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ikp-773/Bill-Split)
+[![wakatime](https://wakatime.com/badge/user/fac0edb0-504c-4b92-b3c9-891f4dc941d5/project/5cf27c96-63e1-43e1-9f0a-56f11b0d3b84.svg)](https://wakatime.com/@fac0edb0-504c-4b92-b3c9-891f4dc941d5/projects/phinumokuh?start=2023-03-13&end=2023-03-19) ![GitHub top language](https://img.shields.io/github/languages/top/ikp-773/Bill-Split?color=b) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ikp-773/Bill-Split)
 
 The "Bill Split" app is a mobile application developed using Flutter and Firebase. It allows users to manage and split bills among group members. With a clean and intuitive user interface, users can easily sign up and sign in to the app to start managing their expenses.
 
