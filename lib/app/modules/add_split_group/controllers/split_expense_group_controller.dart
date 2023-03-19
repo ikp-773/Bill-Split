@@ -112,7 +112,11 @@ class SplitExpenseGroupController extends GetxController {
             ? CommonInstances.storage.read(CommonInstances.uid)
             : selUserIdList[i - 1],
         amt: splitAmounts[i],
-        settled: i == peopleList.indexOf(dropdownValue.value) ? true : false,
+        settled: splitAmounts[i] == 0
+            ? true
+            : i == peopleList.indexOf(dropdownValue.value)
+                ? true
+                : false,
       );
 
       userSplitList.add(userSplit);

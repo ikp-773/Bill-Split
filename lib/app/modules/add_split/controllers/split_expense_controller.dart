@@ -116,18 +116,22 @@ class SplitExpenseController extends GetxController {
           UsersSplit(
             id: CommonInstances.storage.read(CommonInstances.uid),
             amt: splitAmounts[0],
-            settled: (dropdownValue.value == "You"
-                    ? CommonInstances.storage.read(CommonInstances.uid)
-                    : selUserId) ==
-                CommonInstances.storage.read(CommonInstances.uid),
+            settled: splitAmounts[0] == 0
+                ? true
+                : (dropdownValue.value == "You"
+                        ? CommonInstances.storage.read(CommonInstances.uid)
+                        : selUserId) ==
+                    CommonInstances.storage.read(CommonInstances.uid),
           ),
           UsersSplit(
             id: selUserId,
             amt: splitAmounts[1],
-            settled: (dropdownValue.value == "You"
-                    ? CommonInstances.storage.read(CommonInstances.uid)
-                    : selUserId) ==
-                selUserId,
+            settled: splitAmounts[1] == 0
+                ? true
+                : (dropdownValue.value == "You"
+                        ? CommonInstances.storage.read(CommonInstances.uid)
+                        : selUserId) ==
+                    selUserId,
           )
         ],
       ),
